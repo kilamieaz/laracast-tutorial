@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        .is-loading {
-            background: red;
-        }
-    </style>
 </head>
 <body>
 
     <div id="root">
-        <!-- <button v-bind:title="title">button</button> -->
-        <!-- <button :title="title">button</button> -->
-        <button :class="{ 'is-loading': isLoading }" @click="toggleClass">Toggle me</button>
+        <h2>All Tasks</h2>
+        <ul>
+            <li v-for="task in tasks" v-text="task.description"></li>
+        </ul>
+        <h2>Incomplete Tasks</h2>
+        <ul>
+            <li v-for="task in incompleteTasks" v-text="task.description"></li>
+        </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var app = new Vue({
             el: '#root',
             data: {
-                // title: 'titleeee'
-                isLoading: false
+                tasks: [
+                    { description: 'Go to the store', completed: true},
+                    { description: 'Finish Screencast', completed: true},
+                    { description: 'Clean room', completed: false},
+                    { description: 'Make dinner', completed: false},
+                ]
             },
-            methods: {
-                toggleClass() {
-                    this.isLoading = true;
+            computed: {
+                incompleteTasks() {
+                    return this.tasks.filter(task => !task.completed);
                 }
             }
         })
