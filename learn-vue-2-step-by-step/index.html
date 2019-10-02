@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <title>Document</title>
 </head>
+
 <body>
 
-    <div id="root">
-        <h2>All Tasks</h2>
-        <ul>
-            <li v-for="task in tasks" v-text="task.description"></li>
-        </ul>
-        <h2>Incomplete Tasks</h2>
-        <ul>
-            <li v-for="task in incompleteTasks" v-text="task.description"></li>
-        </ul>
+    <div id="root" class="container">
+        <h1 class="title">Component</h1>
+        <task-list></task-list>
+        <br>
+        <h2 class="title">Practical 1</h2>
+        <message title="heloo" body="world"></message>
+        <hr>
+        <h2 class="title">Practical 2</h2>
+        <modal v-show="showModal" @close="showModal = false">
+            <p>We insert any text here</p>
+        </modal>
+        <button @click="showModal = true">Show Modal</button>
+        <hr>
+        <h3 class="title">Practical 3</h3>
+        <tabs>
+            <tab name="About Us" :selected="true">
+                <h1>Here is the content for the about us tab.</h1>
+            </tab>
+
+            <tab name="About Our Culture">
+                <h1>Here is the content for the about our culture tab.</h1>
+            </tab>
+
+            <tab name="About Our Vision">
+                <h1>Here is the content for the about our vision tab.</h1>
+            </tab>
+        </tabs>
+        <br><br><br>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>
-        var app = new Vue({
-            el: '#root',
-            data: {
-                tasks: [
-                    { description: 'Go to the store', completed: true},
-                    { description: 'Finish Screencast', completed: true},
-                    { description: 'Clean room', completed: false},
-                    { description: 'Make dinner', completed: false},
-                ]
-            },
-            computed: {
-                incompleteTasks() {
-                    return this.tasks.filter(task => !task.completed);
-                }
-            }
-        })
-    </script>
+    <script src="main.js"></script>
 </body>
+
 </html>
