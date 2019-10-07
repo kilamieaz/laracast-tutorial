@@ -7,3 +7,5 @@ Route::get('/', function () {
 Route::get('skills', function() {
     return ['laravel', 'vue', 'php', 'javascript'];
 });
+
+Route::resource('projects', 'ProjectsController');
