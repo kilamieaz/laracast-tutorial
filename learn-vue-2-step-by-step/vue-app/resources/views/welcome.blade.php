@@ -9,12 +9,13 @@
     </head>
     <body>
         <div id="app">
-            <ul>
-            <li v-for="skill in skills" v-text="skill"></li>
-            </ul>
+                {{-- <li v-for="skill in skills" v-text="skill"></li> --}}
+                {{-- <input type="text" v-model="coupon"> --}}
+                {{-- <input type="text" :value="coupon" @input="coupon = $event.target.value"> --}}
+            <coupon v-model="coupon"></coupon>
         </div>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+        {{-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script> --}}
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
