@@ -3,11 +3,11 @@ import VueRouter from 'vue-router';
 let routes = [
     {
         path: '/',
-        component: require('./components/Home').default
+        component: require('./views/Home').default
     },
     {
         path: '/about',
-        component: require('./components/About').default
+        component: require('./views/About').default
     },
 ];
 
