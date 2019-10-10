@@ -4,9 +4,13 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">About Component</div>
-
+                    <br>
                     <div class="card-body">
-                        I'm an About component.
+                        <list :items="['one', 'two', 'three']">
+                            <template slot="list-item" slot-scope="props">
+                                <h2 class="title" v-text="props.data"></h2>
+                            </template>
+                        </list>
                     </div>
                 </div>
             </div>
@@ -15,9 +19,10 @@
 </template>
 
 <script>
+    import List from '../components/List';
     export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
+        components: {
+            List
+        },
     }
 </script>
