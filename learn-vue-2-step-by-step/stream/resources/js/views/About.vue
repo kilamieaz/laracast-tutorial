@@ -6,11 +6,18 @@
                     <div class="card-header">About Component</div>
                     <br>
                     <div class="card-body">
-                        <list :items="['one', 'two', 'three']">
+                        <!-- <list :items="['one', 'two', 'three']">
                             <template slot="list-item" slot-scope="props">
                                 <h2 class="title" v-text="props.data"></h2>
                             </template>
-                        </list>
+                        </list> -->
+                        <carousel :autoplay="true">
+                            <img src="http://placeimg.com/640/480/any">
+                            <img src="http://placeimg.com/640/480/any?2">
+                            <img src="http://placeimg.com/640/480/any?3">
+                            <img src="http://placeimg.com/640/480/any?4">
+                            <img src="http://placeimg.com/640/480/any?5">
+                        </carousel>
                     </div>
                 </div>
             </div>
@@ -20,9 +27,10 @@
 
 <script>
     import List from '../components/List';
+    import Carousel from '../components/Carousel';
     export default {
         components: {
-            List
+            List, Carousel
         },
     }
 </script>
