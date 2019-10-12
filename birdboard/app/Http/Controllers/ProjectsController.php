@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class ProjectsController extends Controller
 {
     /**
+     * Enforce middleware.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['store']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -40,8 +48,9 @@ class ProjectsController extends Controller
             'title' => 'required',
             'description' => 'required'
         ]);
-
-        Project::create($request->all());
+        
+        // $request->merge(['owner_id' => auth()->user()->id]);
+        auth()->user()->projects()->create($request->all());
         return redirect('/projects');
     }
 
