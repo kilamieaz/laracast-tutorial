@@ -10,10 +10,10 @@ class ProjectsController extends Controller
     /**
      * Enforce middleware.
      */
-    public function __construct()
-    {
-        $this->middleware('auth', ['only' => ['store']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth', ['only' => ['index', 'store']]);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -48,7 +48,7 @@ class ProjectsController extends Controller
             'title' => 'required',
             'description' => 'required'
         ]);
-        
+
         // $request->merge(['owner_id' => auth()->user()->id]);
         auth()->user()->projects()->create($request->all());
         return redirect('/projects');
@@ -62,6 +62,9 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
+        if (auth()->user()->isNot($project->owner)) {
+            abort('403');
+        }
         return view('projects.show', compact('project'));
     }
 
