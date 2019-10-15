@@ -50,8 +50,8 @@ class ProjectsController extends Controller
         ]);
 
         // $request->merge(['owner_id' => auth()->user()->id]);
-        auth()->user()->projects()->create($request->all());
-        return redirect('/projects');
+        $project = auth()->user()->projects()->create($request->all());
+        return redirect($project->path());
     }
 
     /**
