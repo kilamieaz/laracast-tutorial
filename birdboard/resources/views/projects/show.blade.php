@@ -16,10 +16,19 @@
                 <h2 class="text-lg text-gray-500 font-normal mb-3">Tasks</h2>
                 {{-- tasks --}}
                 @foreach ($project->tasks as $task)
-                <div class="card mb-3">{{ $task->body }}</div>
+                <div class="card mb-3">
+                    <form action="{{ route('tasks.update', [$project->id,$task->id]) }}" method="post">
+                        @csrf
+                        @method('patch')
+                        <div class="flex">
+                            <input type="text" value="{{ $task->body }}" class="w-full {{ !$task->completed ?: 'text-gray-500' }}" name="body">
+                            <input type="checkbox" name="completed" onchange="this.form.submit()" {{ !$task->completed ?: 'checked' }}>
+                        </div>
+                    </form>
+                </div>
                 @endforeach
                 <div class="card mb-3">
-                    <form action="{{ route('tasks.store') }}" method="post">
+                    <form action="{{ route('tasks.store', $project->id) }}" method="post">
                         @csrf
                         <input type="text" placeholder="Add a new task" class="w-full" name="body">
                     </form>
