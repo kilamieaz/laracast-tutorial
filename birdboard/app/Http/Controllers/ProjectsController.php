@@ -46,9 +46,9 @@ class ProjectsController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'notes' => 'min:3'
         ]);
-
         // $request->merge(['owner_id' => auth()->user()->id]);
         $project = auth()->user()->projects()->create($request->all());
         return redirect($project->path());
@@ -62,9 +62,8 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
-        if (auth()->user()->isNot($project->owner)) {
-            abort('403');
-        }
+        $this->authorize('show', $project);
+
         return view('projects.show', compact('project'));
     }
 
@@ -88,7 +87,10 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $this->authorize('update', $project);
+
+        $project->update($request->all());
+        return redirect($project->path());
     }
 
     /**
