@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+//realtime facade add "Facades"
+use Facades\Tests\Setup\ProjectFactory;
 
 class ProjectTasksTest extends TestCase
 {
@@ -20,7 +22,7 @@ class ProjectTasksTest extends TestCase
     public function only_the_owner_of_a_project_may_add_tasks()
     {
         $this->signIn();
-        $project = factory('App\Project')->create();
+        $project = ProjectFactory::create();
         $this->post($project->path() . '/tasks', ['body' => 'test task'])->assertStatus(403);
         $this->assertDatabaseMissing('tasks', ['body' => 'test task']);
     }
@@ -29,20 +31,20 @@ class ProjectTasksTest extends TestCase
     public function only_the_owner_of_a_project_may_update_task()
     {
         $this->signIn();
-        $project = factory('App\Project')->create();
-        $task = $project->addTask('test task');
-        $this->patch($task->path(), ['body' => 'changed'])->assertStatus(403);
+        $project = ProjectFactory::withTasks(1)->create();
+
+        $this->patch($project->tasks()->first()->path(), ['body' => 'changed'])->assertStatus(403);
         $this->assertDatabaseMissing('tasks', ['body' => 'changed']);
     }
 
     /** @test */
     public function a_project_can_have_tasks()
     {
-        // $this->withoutExceptionHandling();
-        $this->signIn();
-        $project = auth()->user()->projects()->create(
-            factory('App\Project')->raw()
-        );
+        // $this->signIn();
+        // $project = auth()->user()->projects()->create(
+        //     factory('App\Project')->raw()
+        // );
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
         $this->post($project->path() . '/tasks', ['body' => 'test task']);
         $this->get($project->path())->assertSee('test task');
     }
@@ -50,12 +52,15 @@ class ProjectTasksTest extends TestCase
     /** @test */
     public function a_task_can_be_updated()
     {
-        $this->signIn();
-        $project = auth()->user()->projects()->create(
-            factory('App\Project')->raw()
-        );
-        $task = $project->addTask('test task');
-        $this->patch($task->path(), [
+        // $project = app(ProjectFactory::class)
+        // ->ownedBy($this->signIn())
+        // ->withTasks(1)
+        // ->create();
+        $project = ProjectFactory::ownedBy($this->signIn())
+        ->withTasks(1)
+        ->create();
+
+        $this->patch($project->tasks->first()->path(), [
             'body' => 'changed',
             'completed' => true
         ]);
@@ -68,10 +73,7 @@ class ProjectTasksTest extends TestCase
     /** @test */
     public function a_task_requires_a_body()
     {
-        $this->signIn();
-        $project = auth()->user()->projects()->create(
-            factory('App\Project')->raw()
-        );
+        $project = ProjectFactory::ownedBy($this->signIn())->create();
         $task = $project->tasks()->create(
             factory('App\Task')->raw(['body' => ''])
         );
