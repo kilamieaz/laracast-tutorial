@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Project;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,10 +32,12 @@ class ManageProjectsTest extends TestCase
         $this->signIn();
         $this->get('/projects/create')->assertStatus(200);
         $attributes = factory('App\Project')->raw(['owner_id' => auth()->id()]);
-        $this->post('/projects', $attributes)->assertRedirect('/projects');
+
+        $response = $this->post('/projects', $attributes);
+        $project = Project::where($attributes)->first();
+        $response->assertRedirect($project->path());
 
         $this->assertDatabaseHas('projects', $attributes);
-
         $this->get('/projects')->assertSee($attributes['title']);
     }
 
