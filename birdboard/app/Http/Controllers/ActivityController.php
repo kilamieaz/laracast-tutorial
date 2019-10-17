@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
-use App\Task;
+use App\Activity;
 use Illuminate\Http\Request;
 
-class ProjectTasksController extends Controller
+class ActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,23 +33,18 @@ class ProjectTasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Project $project)
+    public function store(Request $request)
     {
-        if (auth()->user()->isNot($project->owner)) {
-            abort('403');
-        }
-        $request->validate(['body' => 'required']);
-        $project->addTask($request->body);
-        return redirect($project->path());
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Task  $task
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
+    public function show(Activity $activity)
     {
         //
     }
@@ -58,10 +52,10 @@ class ProjectTasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Task  $task
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit(Activity $activity)
     {
         //
     }
@@ -70,32 +64,21 @@ class ProjectTasksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Task  $task
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project, Task $task)
+    public function update(Request $request, Activity $activity)
     {
-        if (auth()->user()->isNot($task->project->owner)) {
-            abort('403');
-        }
-
-        $request->validate(['body' => 'required']);
-
-        $task->update(['body' => $request->body]);
-
-        if ($request->has('completed')) {
-            $task->complete();
-        }
-        return redirect($project->path());
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Task  $task
+     * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Activity $activity)
     {
         //
     }
