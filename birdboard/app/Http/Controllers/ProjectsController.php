@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
-    /**
-     * Enforce middleware.
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth', ['only' => ['index', 'store']]);
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -79,11 +72,9 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $form, Project $project)
     {
-        $this->authorize('update', $project);
-        $project->update($this->validateRequest($request));
-        return redirect($project->path());
+        return redirect($form->save()->path());
     }
 
     /**
@@ -97,11 +88,11 @@ class ProjectsController extends Controller
         //
     }
 
-    public function validateRequest($request)
+    protected function validateRequest($request)
     {
         return $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title' => 'sometimes|required',
+            'description' => 'sometimes|required',
             'notes' => 'min:3'
         ]);
     }
