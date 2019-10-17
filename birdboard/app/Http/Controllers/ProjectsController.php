@@ -44,13 +44,7 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'notes' => 'min:3'
-        ]);
-        // $request->merge(['owner_id' => auth()->user()->id]);
-        $project = auth()->user()->projects()->create($request->all());
+        $project = auth()->user()->projects()->create($this->validateRequest($request));
         return redirect($project->path());
     }
 
@@ -63,7 +57,6 @@ class ProjectsController extends Controller
     public function show(Project $project)
     {
         $this->authorize('show', $project);
-
         return view('projects.show', compact('project'));
     }
 
@@ -75,7 +68,8 @@ class ProjectsController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        $this->authorize('update', $project);
+        return view('projects.edit', compact('project'));
     }
 
     /**
@@ -88,8 +82,7 @@ class ProjectsController extends Controller
     public function update(Request $request, Project $project)
     {
         $this->authorize('update', $project);
-
-        $project->update($request->all());
+        $project->update($this->validateRequest($request));
         return redirect($project->path());
     }
 
@@ -102,5 +95,14 @@ class ProjectsController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function validateRequest($request)
+    {
+        return $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'notes' => 'min:3'
+        ]);
     }
 }
