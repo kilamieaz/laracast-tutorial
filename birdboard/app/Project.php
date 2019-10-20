@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use RecordsActivity;
+
     protected $guarded = []; // yolo
+
+    protected static $recordableEvents = ['created', 'updated'];
 
     public function path()
     {
@@ -31,11 +35,5 @@ class Project extends Model
     public function activity()
     {
         return $this->hasMany(Activity::class)->latest();
-    }
-
-    public function recordActivity($description)
-    {
-        // $this->activity()->create(['description' => $description]);
-        $this->activity()->create(compact('description'));
     }
 }
