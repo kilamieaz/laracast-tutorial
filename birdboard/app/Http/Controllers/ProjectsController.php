@@ -85,7 +85,9 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $this->authorize('delete', $project);
+        $project->delete();
+        return redirect(route('projects.index'));
     }
 
     protected function validateRequest($request)

@@ -29,4 +29,9 @@ class ProjectPolicy
     {
         return $user->is($project->owner);
     }
+
+    public function delete(User $user, Project $project)
+    {
+        return $user->is($project->owner);
+    }
 }
