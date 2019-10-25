@@ -20,18 +20,23 @@ class ProjectPolicy
         //
     }
 
-    public function show(User $user, Project $project)
+    public function create(User $user, Project $project)
     {
-        return $user->is($project->owner);
+        return $user->is($project->owner) || $project->members->contains($user);
+    }
+
+    public function view(User $user, Project $project)
+    {
+        return $user->is($project->owner) || $project->members->contains($user);
     }
 
     public function update(User $user, Project $project)
     {
-        return $user->is($project->owner);
+        return $user->is($project->owner) || $project->members->contains($user);
     }
 
     public function delete(User $user, Project $project)
     {
-        return $user->is($project->owner);
+        return $user->is($project->owner) || $project->members->contains($user);
     }
 }
