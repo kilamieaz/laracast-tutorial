@@ -18,6 +18,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('projects', 'ProjectsController');
+    Route::post('projects/{project}/invitations', 'ProjectInvitationsController@store');
     Route::resource('projects/{project}/tasks', 'ProjectTasksController');
     Route::get('/home', 'HomeController@index')->name('home');
 });
