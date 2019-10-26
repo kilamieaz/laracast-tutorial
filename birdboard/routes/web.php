@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +16,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth'], function () {
     Route::resource('projects', 'ProjectsController');
     Route::resource('projects/{project}/tasks', 'ProjectTasksController');
     Route::get('/home', 'HomeController@index')->name('home');
