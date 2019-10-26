@@ -17,16 +17,18 @@ class ProjectFactory
         //we want use api
         return $this;
     }
+
     public function withTasks($count)
     {
         $this->tasksCount = $count;
         //we want use api
         return $this;
     }
+
     public function create()
     {
         $project = factory(Project::class)->create([
-            'owner_id' => $this->user ?? factory(User::class)
+            'owner_id' => $this->user->id ?? factory(User::class)
         ]);
 
         factory(Task::class, $this->tasksCount)->create([
