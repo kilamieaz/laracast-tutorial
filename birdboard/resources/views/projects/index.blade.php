@@ -17,4 +17,5 @@
     <div>No Projects yet.</div>
     @endforelse
 </main>
+
 @endsection

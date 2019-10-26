@@ -40,7 +40,8 @@ class ManageProjectsTest extends TestCase
         $project->invite($user);
         // when i visit my dashboard
         // i should see that project
-        $this->get('/projects')->assertSee($project->title);
+        $this->get('/projects')
+        ->assertSee($project->title);
     }
 
     /** @test */
@@ -66,6 +67,7 @@ class ManageProjectsTest extends TestCase
         $project = ProjectFactory::ownedBy($this->signIn())->create();
         $this->delete($project->path())
         ->assertRedirect(route('projects.index'));
+
         $this->assertDatabaseMissing('projects', $project->only('id'));
     }
 
