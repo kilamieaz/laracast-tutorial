@@ -2,7 +2,7 @@
 @section('content')
 <header class="flex items-center mb-3 py-4">
     <div class="flex justify-between item-center w-full">
-        <h2 class="text-gray-500 text-sm font-normal">My Projects</h2>
+        <h2 class="text-default text-sm font-normal">My Projects</h2>
         <a href="{{ route('projects.create') }}"
             class="button">New Project</a>
     </div>
