@@ -56,29 +56,31 @@
                         <div class="flex item-center ml-auto">
                             <!-- Authentication Links -->
                             @guest
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="text-accent mr-4 no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="text-accent no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
                             @else
                             <theme-switch></theme-switch>
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img width="50" class="rounded-full" src="{{ gravatar_url(auth()->user()->email) }}">
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right text-default"
-                                aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <dropdown align="right" width="200px">
+                                <template v-slot:trigger>
+                                    <button
+                                        class="flex items-center text-default no-underline text-sm focus:outline-none">
+                                        <img width="50" class="rounded-full"
+                                            src="{{ gravatar_url(auth()->user()->email) }}">
+                                        {{ auth()->user()->name }}
+                                    </button>
+                                </template>
+                                <a class="dropdown-menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    Logout
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
                                     @csrf
                                 </form>
-                            </div>
+                            </dropdown>
                             @endguest
                         </div>
                     </div>

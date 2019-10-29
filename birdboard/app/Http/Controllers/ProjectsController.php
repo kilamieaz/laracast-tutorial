@@ -38,6 +38,14 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
         $project = auth()->user()->projects()->create($this->validateRequest($request));
+
+        if ($tasks = $request->tasks) {
+            $project->addTasks($tasks);
+        }
+        if (request()->wantsJson()) {
+            return ['message' => $project->path()];
+        }
+
         return redirect($project->path());
     }
 

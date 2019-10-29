@@ -64,6 +64,20 @@
     --text-error-color: red;
 }
 
+.dropdown-menu-link {
+    @apply .block .text-default .no-underline .text-sm .leading-loose .px-4;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+}
+
+.dropdown-toggle {
+    >button:focus {
+        outline: 0;
+    }
+}
+
 body,
 button {
     @apply .text-default;
